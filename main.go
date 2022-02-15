@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"os/exec"
-	"time"
 )
 
 func main() {
@@ -12,11 +11,11 @@ func main() {
 
 	loginRequired := true
 	cache := readSSOCache()
-	if cache != nil {
-		loginExpiresAt, err := time.Parse(time.RFC3339, cache.ExpiresAt)
-		checkErr(err)
-		loginRequired = loginExpiresAt.Before(time.Now())
-	}
+	//if cache != nil {
+	//	loginExpiresAt, err := time.Parse(time.RFC3339, cache.ExpiresAt)
+	//	checkErr(err)
+	//	loginRequired = loginExpiresAt.Before(time.Now())
+	//}
 
 	if loginRequired {
 		for profileName, profile := range awsCfg.Profiles {
@@ -38,6 +37,7 @@ func main() {
 			roleCreds.section, err = awsCreds.file.NewSection(profileName)
 			checkErr(err)
 		}
+		awsCreds.Credentials[profileName] = roleCreds
 	}
 
 	awsCfg.Save()
