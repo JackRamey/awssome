@@ -38,6 +38,7 @@ func main() {
 			roleCreds.section, err = awsCreds.file.NewSection(profileName)
 			checkErr(err)
 		}
+		awsCreds.Credentials[profileName] = roleCreds
 	}
 
 	awsCfg.Save()
