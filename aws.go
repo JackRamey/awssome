@@ -205,6 +205,11 @@ func readSSOCache() *awsCache {
 	}
 
 	for _, file := range files {
+		// We only want json files
+		if !strings.HasSuffix(file.Name(), ".json") {
+			continue
+		}
+
 		// We don't want the botocore file
 		if strings.HasPrefix(file.Name(), "botocore") {
 			continue
